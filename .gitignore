@@ -1,4 +1,3 @@
-.json
 .installed.cfg
 bin
 develop-eggs
@@ -11,3 +10,7 @@ lib
 lib64
 *.pyo
 *.pyc
+*.json
+*.jpg
+.idea/*.xml
+.idea/*.iml
