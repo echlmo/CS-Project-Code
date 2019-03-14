@@ -14,3 +14,4 @@ lib64
 *.jpg
 .idea/*.xml
 .idea/*.iml
+*.csv
