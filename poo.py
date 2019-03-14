@@ -15,8 +15,7 @@ Helper function: Normalise and resize image with Glaucoma distortion
 """
 def preproc_glaucoma(img):
     glauc_a = glaucoma(img)
-    resized = np.array([cv2.resize(glauc_a, (299, 299))])
-    final = preprocess_input(resized)
+    final = preprocess_input(glauc_a)
 
     return final
 
@@ -50,7 +49,7 @@ explainer = lime_image.LimeImageExplainer()
 # datagen = ImageDataGenerator(
 #      preprocessing_function=preproc_glaucoma)
 datagen = ImageDataGenerator(
-     preprocessing_function=preproc_amd)
+      preprocessing_function=preproc_amd)
 # datagen = ImageDataGenerator(
 #      preprocessing_function=preproc_diabeticRet)
 
@@ -59,16 +58,12 @@ gen = datagen.flow_from_directory(
     # directory="/Users/echlmo/Desktop/amd_images/",
     target_size=(299,299),
     shuffle=False)
+    # ,save_to_dir="/Users/echlmo/Desktop/save_amd")
 
 filepaths = gen.filepaths
 
 preds = model.predict_generator(gen, steps=4)
 decoded = decode_predictions(preds)
-
-explanation = explainer.explain_instance(
-    images[0],
-    preds,
-    top_labels=5, hide_color=0)
 
 poo = dict()
 for i in range(len(filepaths)):
@@ -85,5 +80,5 @@ for i in range(len(filepaths)):
 
 # json.dump(poo,open("./results.json","w"),indent=4,separators=(',',': '))
 # json.dump(poo,open("./glaucoma_results.json","w"),indent=4,separators=(',',': '))
-# json.dump(poo,open("./amd_results-savetest.json","w"),indent=4,separators=(',',': '))
+json.dump(poo,open("./amd_results.json","w"),indent=4,separators=(',',': '))
 # json.dump(poo,open("./diabeticRet_results.json","w"),indent=4,separators=(',',': '))
