@@ -29,6 +29,7 @@ def getAllImgs(dir):
 
     return fileList
 
+
 """Preprocess image"""
 def preproc(img):
     im = cv2.imread(img)[...,::-1]
@@ -38,6 +39,7 @@ def preproc(img):
     return final
 
 
+"""Get the gradient class activation mapping for a single image"""
 def get_gradcam_single(image, model, dest):
 
     x = preproc(image)
@@ -67,6 +69,7 @@ def get_gradcam_single(image, model, dest):
     cv2.imwrite(dest + os.path.basename(image), superimposed_img)
 
 
+"""Get GradCAM for all images in a directory"""
 def get_gradcam_images(images_path, model, dest):
 
     if not os.path.exists(dest):
@@ -76,11 +79,3 @@ def get_gradcam_images(images_path, model, dest):
 
     for x in imlist:
         get_gradcam_single(x, model, dest)
-
-
-# model = InceptionResNetV2(include_top=True,weights="imagenet",classes=1000)
-#
-# test = "/Users/echlmo/Desktop/diabeticRet_images/"
-# dest = "/Users/echlmo/Desktop/gradcam/diabeticRet/"
-#
-# get_gradcam_images(test,model,dest)

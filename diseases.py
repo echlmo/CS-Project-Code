@@ -3,7 +3,6 @@ import numpy as np
 import math
 import random
 
-
 """
 Helper function for Gaussian kernel value
 """
@@ -42,10 +41,10 @@ def glaucoma(img):
 
     # Make the mask
     mask = np.zeros((h, w, d))
-    cv2.circle(mask, (w // 2, h // 2), h // 4, (255, 255, 255), -1)
+    cv2.circle(mask, (w // 2, h // 2), h // random.randint(2,4), (255, 255, 255), -1)
 
     # Darken image (lower saturation/brightness)
-    b = 190
+    b = random.randint(150,200)
     M = np.ones_like(imgcop) * b
     cv2.subtract(imgcop, M, dst=imgcop)
 
@@ -111,17 +110,20 @@ def amd(img):
     blot = np.ones((height, width, depth))
     mask = np.zeros_like(img)
 
+    blobsize = random.randint(2,4)
+
     # Create central blob and mask
-    blot = cv2.circle(blot, (width // 2, height // 2), int(height // 2), (0, 0, 0), -1)  # Create circular mask
-    mask = cv2.circle(mask, (width // 2, height // 2), int(height // 2), (255, 255, 255), -1)
+    blot = cv2.circle(blot, (width // 2, height // 2), height // blobsize, (0, 0, 0), -1)  # Create circular mask
+    mask = cv2.circle(mask, (width // 2, height // 2), height // blobsize, (255, 255, 255), -1)
 
     # Blur the blob and mask
-    kern = kernel(width * 1.25)
+    kern = kernel(width)
     k2 = kernel(height)
     blurred = cv2.GaussianBlur(blot, (kern, kern), 0)
-    cv2.GaussianBlur(mask, (k2, k2), 0, dst=mask)
+    mask = cv2.GaussianBlur(mask, (k2, k2), 0)
 
-    copy = pincushion(copy, 8, 2)
+    strength = blobsize*10
+    copy = pincushion(copy, strength, blobsize)
     result = distortWithMask(copy, img, mask)
 
     multi = np.multiply(result / 255, blurred)

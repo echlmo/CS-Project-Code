@@ -78,7 +78,7 @@ for i in range(len(filepaths)):
     poo[filepaths[i]] = entry
 
 
-# json.dump(poo,open("./results.json","w"),indent=4,separators=(',',': '))
+# json.dump(poo,open("./base_results.json","w"),indent=4,separators=(',',': '))
 # json.dump(poo,open("./glaucoma_results.json","w"),indent=4,separators=(',',': '))
 json.dump(poo,open("./amd_results.json","w"),indent=4,separators=(',',': '))
 # json.dump(poo,open("./diabeticRet_results.json","w"),indent=4,separators=(',',': '))
