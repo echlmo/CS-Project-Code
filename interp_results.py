@@ -39,7 +39,7 @@ def res_to_csv(filepath, results_file):
         dicdata["Confidence"] = data[key]["0"]["confidence"]
 
         # Record hit/miss based on the original class
-        dicdata["Classification Accuracy"] = classify_pred(key, data[key]["0"]["class_id"])
+        dicdata["Hits"] = classify_pred(key, data[key]["0"]["class_id"])
 
         results.append(dicdata)
 

@@ -84,3 +84,4 @@ def run_experiment(img_dir, distort, results_file):
     # Dump results as a pickle
     # with open('results.pickle', 'w') as outfile:
     #    pickle.dump(output, outfile)
+
