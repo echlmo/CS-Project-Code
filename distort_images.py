@@ -95,5 +95,6 @@ def main():
         cop_dir = shutil.copytree(args.img_dir, os.path.join(os.path.dirname(args.img_dir), "diabeticRet_images"))
         diabeticRet_distort(cop_dir)
 
+
 if __name__ == '__main__':
     main()

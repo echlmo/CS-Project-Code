@@ -1,5 +1,6 @@
 import json
 import pickle
+import argparse
 
 from keras.applications.inception_resnet_v2 import InceptionResNetV2, preprocess_input
 from keras.applications.imagenet_utils import decode_predictions
@@ -85,3 +86,34 @@ def run_experiment(img_dir, distort, results_file):
     # with open('results.pickle', 'w') as outfile:
     #    pickle.dump(output, outfile)
 
+def main():
+    parser = argparse.ArgumentParser(description='Run experiment')
+    parser.add_argument(
+        '--img_dir',
+        default='/testing_images',
+        type=str,
+        help='Path to directory of images'
+    )
+    parser.add_argument(
+        '--distort',
+        default='none',
+        type=str,
+        help='Type of distortion: none (default), glaucoma, amd, dr'
+    )
+    parser.add_argument(
+        '--results_file',
+        default='/results.json',
+        type=str,
+        help='Results file (must be .JSON)'
+    )
+    args = parser.parse_args()
+
+    # # check files
+    # if not args.img_dir.exists():
+    #     raise FileNotFoundError(args.img_dir)
+
+    #Run experiment
+    run_experiment(args.img_dir, args.distort, args.results_file)
+
+if __name__ == '__main__':
+    main()

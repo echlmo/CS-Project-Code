@@ -1,4 +1,6 @@
 import os
+import argparse
+
 import numpy as np
 import cv2
 import matplotlib
@@ -79,3 +81,32 @@ def get_gradcam_images(images_path, model, dest):
 
     for x in imlist:
         get_gradcam_single(x, model, dest)
+
+
+def main():
+    parser = argparse.ArgumentParser(description='Run experiment')
+    parser.add_argument(
+        '--imgpath',
+        default='results.json',
+        type=str,
+        help='Path to directory of input images'
+    )
+    parser.add_argument(
+        '--dest',
+        default='/gradcam/',
+        type=str,
+        help='Name/path of destination directory for Grad-CAM images to be saved'
+    )
+    args = parser.parse_args()
+
+    # # check files
+    # if not args.img_dir.exists():
+    #     raise FileNotFoundError(args.img_dir)
+
+    model = InceptionResNetV2(include_top=True, weights="imagenet", classes=1000)
+
+    get_gradcam_images(args.imgpath,model,args.dest)
+
+
+if __name__ == '__main__':
+    main()
